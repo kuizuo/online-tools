@@ -150,7 +150,13 @@ export default function QuerystringJson() {
         <Button variant='contained' startIcon={<ContentCopyIcon />} onClick={copyCode}>
           复制
         </Button>
-        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={snackStatus.open} autoHideDuration={2000} onClose={handleClose} key={snackStatus.message}>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={snackStatus.open}
+          autoHideDuration={2000}
+          onClose={handleClose}
+          key={snackStatus.message}
+        >
           <Alert severity={snackStatus.severity} sx={{ width: '100%' }}>
             {snackStatus.message}
           </Alert>

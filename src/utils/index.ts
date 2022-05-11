@@ -1,8 +1,9 @@
 import { gbkEncodeURIComponent, gbkDecodeURIComponent } from './gbk'
+const json2ts = require('json2ts')
 
 type charsetType = 'utf-8' | 'gbk' | string | undefined
 
-function qs2json(str: string, charset: charsetType = 'utf-8'): string {
+export function qs2json(str: string, charset: charsetType = 'utf-8'): string {
   if (charset === 'utf-8') {
     // str = decodeURIComponent(str)
   } else {
@@ -18,7 +19,7 @@ function qs2json(str: string, charset: charsetType = 'utf-8'): string {
   return JSON.stringify(json)
 }
 
-function json2qs(str: string, charset: charsetType = 'utf-8'): string {
+export function json2qs(str: string, charset: charsetType = 'utf-8'): string {
   const newSearchParams = new URLSearchParams(eval(`(${str})`))
 
   let json: any = {}
@@ -37,12 +38,19 @@ function json2qs(str: string, charset: charsetType = 'utf-8'): string {
     .join('&')
 }
 
-function cookie2json(cookie: any): string {
-  const json = cookie.split('; ').reduce((a: { [x: string]: any }, val: string) => ((a[val.slice(0, val.indexOf('=')).trim()] = val.slice(val.indexOf('=') + 1).trim()), a), {})
+export function cookie2json(cookie: any): string {
+  const json = cookie
+    .split('; ')
+    .reduce(
+      (a: { [x: string]: any }, val: string) => (
+        (a[val.slice(0, val.indexOf('=')).trim()] = val.slice(val.indexOf('=') + 1).trim()), a
+      ),
+      {},
+    )
   return JSON.stringify(json)
 }
 
-function json2cookie(json: any) {
+export function json2cookie(json: any) {
   return Object.keys(json)
     .map((key) => {
       return key + '=' + json[key]
@@ -50,7 +58,7 @@ function json2cookie(json: any) {
     .join('; ')
 }
 
-function urlencode(str: string, charset: charsetType = 'utf-8'): string {
+export function urlencode(str: string, charset: charsetType = 'utf-8'): string {
   if (charset === 'utf-8') {
     return encodeURIComponent(str)
   } else {
@@ -58,7 +66,7 @@ function urlencode(str: string, charset: charsetType = 'utf-8'): string {
   }
 }
 
-function urldecode(str: string, charset: charsetType = 'utf-8'): string {
+export function urldecode(str: string, charset: charsetType = 'utf-8'): string {
   if (charset === 'utf-8') {
     return decodeURIComponent(str)
   } else {
@@ -66,4 +74,6 @@ function urldecode(str: string, charset: charsetType = 'utf-8'): string {
   }
 }
 
-export { qs2json, json2qs, cookie2json, json2cookie, urlencode, urldecode }
+export function json2Ts(content: string) {
+  return json2ts.convert(content)
+}

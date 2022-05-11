@@ -10,6 +10,7 @@ import QuerystringJson from '../components/QuerystringJson'
 import CookieJson from '../components/CookieJson'
 import UrlEncode from '../components/UrlEncode'
 import SwitchTheme from '../components/SwitchTheme'
+import Json2Ts from '../components/Json2Ts'
 import useTheme from '../hooks/useTheme'
 import { ThemeContext } from '../contexts/theme-context'
 
@@ -17,7 +18,13 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
 
   return (
-    <div role='tabpanel' hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
       {value === index && <Box sx={{ p: 3 }}> {children}</Box>}
     </div>
   )
@@ -47,6 +54,7 @@ export default function BasicTabs() {
             <Tab label='查询字符串与json转换' />
             <Tab label='cookie与json转化' />
             <Tab label='urlencode编码' />
+            <Tab label='json2ts' />
             <SwitchTheme></SwitchTheme>
           </Tabs>
         </Box>
@@ -64,6 +72,11 @@ export default function BasicTabs() {
           <TabPanel value={value} index={2}>
             <KeepAlive>
               <UrlEncode></UrlEncode>
+            </KeepAlive>
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <KeepAlive>
+              <Json2Ts></Json2Ts>
             </KeepAlive>
           </TabPanel>
         </AliveScope>
